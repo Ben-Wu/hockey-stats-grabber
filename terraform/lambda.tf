@@ -1,4 +1,4 @@
-resource "aws_lambda_function" "get-players-lambda" {
+resource "aws_lambda_function" "get_players_lambda" {
   filename = "../getPlayers/target/scala-2.12/getPlayers.jar"
   role = "${aws_iam_role.lambda_iam_role.arn}"
   function_name = "nhl-stats-grabber-getPlayers"
@@ -8,7 +8,7 @@ resource "aws_lambda_function" "get-players-lambda" {
   timeout = 60
 }
 
-resource "aws_lambda_function" "get-player-stats-lambda" {
+resource "aws_lambda_function" "get_player_stats_lambda" {
   filename = "../getPlayerStats/target/scala-2.12/getPlayerStats.jar"
   role = "${aws_iam_role.lambda_iam_role.arn}"
   function_name = "nhl-stats-grabber-getPlayerStats"
