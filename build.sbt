@@ -16,13 +16,14 @@ lazy val global = project
 lazy val common = project
   .settings(
     name := "common",
+    libraryDependencies := commonDependencies,
     commonSettings
   )
 
 lazy val getPlayers = project
   .settings(
     name := "getPlayers",
-    libraryDependencies := commonDependencies,
+    libraryDependencies ++= lambdaDependencies,
     commonSettings,
     assemblySettings
   )
@@ -31,7 +32,7 @@ lazy val getPlayers = project
 lazy val getPlayerStats = project
   .settings(
     name := "getPlayerStats",
-    libraryDependencies := commonDependencies,
+    libraryDependencies ++= lambdaDependencies,
     commonSettings,
     assemblySettings
   )
@@ -41,9 +42,14 @@ lazy val getPlayerStats = project
   * Dependencies
   */
 
-lazy val commonDependencies = Seq(
+lazy val lambdaDependencies = Seq(
   "com.amazonaws" % "aws-lambda-java-events" % "2.2.1",
   "com.amazonaws" % "aws-lambda-java-core" % "1.2.0"
+)
+
+lazy val commonDependencies = Seq(
+  "org.scalaj" %% "scalaj-http" % "2.4.1",
+  "org.json4s" %% "json4s-native" % "3.6.2"
 )
 
 /**
