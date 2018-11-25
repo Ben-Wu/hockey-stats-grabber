@@ -42,12 +42,11 @@ lazy val getPlayerStats = project
   * Dependencies
   */
 
-lazy val lambdaDependencies = Seq(
-  "com.amazonaws" % "aws-lambda-java-events" % "2.2.1",
-  "com.amazonaws" % "aws-lambda-java-core" % "1.2.0"
-)
+lazy val lambdaDependencies = Seq()
 
 lazy val commonDependencies = Seq(
+  "com.amazonaws" % "aws-lambda-java-events" % "2.2.1",
+  "com.amazonaws" % "aws-lambda-java-core" % "1.2.0",
   "org.scalaj" %% "scalaj-http" % "2.4.1",
   "org.json4s" %% "json4s-native" % "3.6.2"
 )

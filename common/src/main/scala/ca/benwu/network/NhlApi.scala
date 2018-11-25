@@ -10,8 +10,8 @@ object NhlApi {
 
   val baseUrl = "https://statsapi.web.nhl.com"
 
-  def getRosters(year: String): List[Player] = {
-    val queryParams = Map("season" -> year, "expand" -> "team.roster")
+  def getRosters(season: String): List[Player] = {
+    val queryParams = Map("season" -> season, "expand" -> "team.roster")
     val response = HttpRequest.get(baseUrl, "/api/v1/teams", queryParams)
 
     implicit val formats = DefaultFormats

@@ -3,7 +3,7 @@ resource "aws_lambda_function" "get_players_lambda" {
   role = "${aws_iam_role.lambda_iam_role.arn}"
   function_name = "nhl-stats-grabber-getPlayers"
   runtime = "java8"
-  handler = "Handler"
+  handler = "ca.benwu.Handler"
   source_code_hash = "${base64sha256(file("../getPlayers/target/scala-2.12/getPlayers.jar"))}"
   timeout = 60
 }
@@ -13,7 +13,7 @@ resource "aws_lambda_function" "get_player_stats_lambda" {
   role = "${aws_iam_role.lambda_iam_role.arn}"
   function_name = "nhl-stats-grabber-getPlayerStats"
   runtime = "java8"
-  handler = "Handler"
+  handler = "ca.benwu.Handler"
   source_code_hash = "${base64sha256(file("../getPlayerStats/target/scala-2.12/getPlayerStats.jar"))}"
   timeout = 60
 }
