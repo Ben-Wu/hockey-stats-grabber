@@ -32,6 +32,20 @@ resource "aws_iam_role_policy" "lambda_policy" {
         "logs:PutLogEvents"
       ],
       "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem"
+      ],
+      "Resource": [
+        "${aws_dynamodb_table.player_table.arn}",
+        "${aws_dynamodb_table.player_stats_table.arn}"
+      ]
     }
   ]
 }
