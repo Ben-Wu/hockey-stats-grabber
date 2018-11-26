@@ -2,12 +2,12 @@ package ca.benwu
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 
-import ca.benwu.model.{LambdaInput, LambdaResponse}
+import ca.benwu.model.input.{GetPlayerInput, GetPlayerStatsInput}
 
-class Handler extends RequestHandler[LambdaInput, LambdaResponse] {
+class Handler extends RequestHandler[GetPlayerStatsInput, GetPlayerInput] {
 
-  def handleRequest(input: LambdaInput, context: Context): LambdaResponse = {
-    println("Hello world")
-    LambdaResponse("done", input)
+  def handleRequest(input: GetPlayerStatsInput, context: Context): GetPlayerInput = {
+    println(s"${input.playerIds}")
+    GetPlayerInput(input.year + 1, input.endYear)
   }
 }

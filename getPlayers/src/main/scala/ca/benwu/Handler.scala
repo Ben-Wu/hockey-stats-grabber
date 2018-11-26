@@ -1,24 +1,28 @@
 package ca.benwu
 
+import collection.JavaConverters._
+import scala.collection.mutable
+
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 
-import ca.benwu.model.{LambdaInput, LambdaResponse}
+import ca.benwu.model.input.{GetPlayerInput, GetPlayerStatsInput}
 import ca.benwu.network.NhlApi
 
-class Handler extends RequestHandler[Input, LambdaResponse] {
+class Handler extends RequestHandler[GetPlayerInput, GetPlayerStatsInput] {
 
-  def handleRequest(input: Input, context: Context): LambdaResponse = {
-    var playerCount = 0
-    for (year <- input.startYear to input.endYear) {
-      val season = s"$year${year+1}"
+  def handleRequest(input: GetPlayerInput, context: Context): GetPlayerStatsInput = {
+    val year = input.startYear
 
+    if (year > input.endYear) {
+      GetPlayerStatsInput(mutable.Buffer[Int]().asJava, year, input.endYear, done = true)
+    } else {
+      val season = s"$year${year + 1}"
       println(s"Getting players for $season")
 
       val players = NhlApi.getRosters(season)
-      playerCount = playerCount + players.length
+      println(s"Got ${players.length} players for $season")
 
-      println(players.length)
+      GetPlayerStatsInput(players.map(player => player.id).toBuffer.asJava, year, input.endYear, done = false)
     }
-    LambdaResponse(playerCount.toString, new LambdaInput())
   }
 }

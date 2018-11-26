@@ -2,7 +2,7 @@ package ca.benwu
 
 import ca.benwu.network.NhlApi
 
-object Test {
+object ApiTest {
   def main(args: Array[String]): Unit = {
     NhlApi.getRosters("20172018")
   }

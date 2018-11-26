@@ -3,18 +3,32 @@ resource "aws_sfn_state_machine" "main_state_machine" {
   role_arn = "${aws_iam_role.sfn_iam_role.arn}"
   definition = <<EOF
 {
-  "Comment": "Collect players stats and store them in DB",
+  "Comment": "Collect player data and stats and store them in database",
   "StartAt": "GetPlayers",
   "States": {
     "GetPlayers": {
       "Type": "Task",
       "Resource": "${aws_lambda_function.get_players_lambda.arn}",
-      "Next": "GetPlayerStats"
+      "Next": "CheckYear"
     },
     "GetPlayerStats": {
       "Type": "Task",
       "Resource": "${aws_lambda_function.get_player_stats_lambda.arn}",
-      "End": true
+      "Next": "GetPlayers"
+    },
+    "CheckYear": {
+      "Type": "Choice",
+      "Choices": [
+      {
+        "Variable": "$.done",
+        "BooleanEquals": true,
+        "Next": "SuccessState"
+      }
+      ],
+      "Default": "GetPlayerStats"
+    },
+    "SuccessState": {
+      "Type": "Succeed"
     }
   }
 }

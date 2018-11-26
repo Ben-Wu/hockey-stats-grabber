@@ -4,6 +4,10 @@ ETL pipeline for NHL roster data taking team rosters and storing player informat
 
 Runs on AWS using a step function state machine and lambdas.
 
+### Execution Visualization
+
+![execution visualization](/images/execution.png)
+
 ## Usage
 
 ### Setup 
