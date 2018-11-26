@@ -40,7 +40,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
         "dynamodb:PutItem",
         "dynamodb:UpdateItem",
         "dynamodb:DeleteItem",
-        "dynamodb:BatchWriteItem"
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DescribeTable"
       ],
       "Resource": [
         "${aws_dynamodb_table.player_table.arn}",
