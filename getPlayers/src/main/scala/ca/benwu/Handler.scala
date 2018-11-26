@@ -2,11 +2,10 @@ package ca.benwu
 
 import collection.JavaConverters._
 import scala.collection.mutable
-
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
-
 import ca.benwu.model.input.{GetPlayerInput, GetPlayerStatsInput}
 import ca.benwu.network.NhlApi
+import ca.benwu.storage.StorageApi
 
 class Handler extends RequestHandler[GetPlayerInput, GetPlayerStatsInput] {
 
@@ -22,7 +21,11 @@ class Handler extends RequestHandler[GetPlayerInput, GetPlayerStatsInput] {
       val players = NhlApi.getRosters(season)
       println(s"Got ${players.length} players for $season")
 
-      GetPlayerStatsInput(players.map(player => player.id).toBuffer.asJava, year, input.endYear, done = false)
+      val writtenPlayers = players.filter(player => StorageApi.writePlayer(player))
+      println(s"${writtenPlayers.length} players for saved for $season")
+
+      GetPlayerStatsInput(writtenPlayers.map(player => player.id).toBuffer.asJava,
+        year, input.endYear, done = false)
     }
   }
 }

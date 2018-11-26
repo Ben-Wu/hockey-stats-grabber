@@ -2,7 +2,7 @@
 
 ETL pipeline for NHL roster data taking team rosters and storing player information and stats to a database.
 
-Runs on AWS using a step function state machine and lambdas.
+Runs on AWS using a Step Function state machine to execute Lambda functions, saving results to DynamoDB.
 
 ### Execution Visualization
 
