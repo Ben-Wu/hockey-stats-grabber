@@ -2,8 +2,7 @@ package ca.benwu.storage
 
 import awscala._
 import dynamodbv2._
-
-import ca.benwu.model.Player
+import ca.benwu.model.{Player, StatYear}
 
 object StorageApi {
 
@@ -14,7 +13,8 @@ object StorageApi {
   lazy val statsTable: Table = dynamoDB.table("hockey-stats-grabber-playerStats").get
 
   /**
-    * Save a player object to the database.  Does not overwrite if already existing
+    * Save a player object to the database
+    * Does not overwrite if player is already in the database
     *
     * @return true if written, false if player already existed in DB
     */
@@ -29,4 +29,23 @@ object StorageApi {
         true
       }
     }
+
+  /**
+    * Save a stat year to the database
+    * Will overwrite any stat year belonging to the same player in the same season
+    */
+  def writeStatYear(statYear: StatYear): Unit = {
+    val attributes = Map(
+      "Games" -> Some(statYear.games),
+      "Goals" -> Some(statYear.goals),
+      "Assists" -> Some(statYear.assists),
+      "Points" -> Some(statYear.points),
+      "PIM" -> statYear.pim,
+      "PlusMinus" -> statYear.plusMinus,
+      "Team" -> Some(statYear.team),
+      "League" -> Some(statYear.league),
+    ).filter{ case(_, v) => v.isDefined }.map{ case(k, v) => (k, v.get) }.toList
+    statsTable.putItem(hashPK = statYear.playerId, rangePK = statYear.season,
+      attributes: _*)
+  }
 }

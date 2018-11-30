@@ -16,7 +16,7 @@ resource "aws_lambda_function" "get_player_stats_lambda" {
   runtime = "java8"
   handler = "ca.benwu.Handler"
   source_code_hash = "${base64sha256(file("../getPlayerStats/target/scala-2.12/getPlayerStats.jar"))}"
-  timeout = 60
+  timeout = 300
   memory_size = 512
 }
 

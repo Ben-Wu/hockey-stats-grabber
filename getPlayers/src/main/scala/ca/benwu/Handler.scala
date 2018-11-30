@@ -18,7 +18,8 @@ class Handler extends RequestHandler[GetPlayerInput, GetPlayerStatsInput] {
       val season = s"$year${year + 1}"
       println(s"Getting players for $season")
 
-      val players = NhlApi.getRosters(season)
+      // FIXME: Filter goalies for now because they have different stat lines
+      val players = NhlApi.getRosters(season).filter(player => player.position != "Goalie")
       println(s"Got ${players.length} players for $season")
 
       val writtenPlayers = players.filter(player => StorageApi.writePlayer(player))
