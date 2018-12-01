@@ -36,10 +36,10 @@ object StorageApi {
     */
   def writeStatYear(statYear: StatYear): Unit = {
     val attributes = Map(
-      "Games" -> Some(statYear.games),
-      "Goals" -> Some(statYear.goals),
-      "Assists" -> Some(statYear.assists),
-      "Points" -> Some(statYear.points),
+      "Games" -> statYear.games,
+      "Goals" -> statYear.goals,
+      "Assists" -> statYear.assists,
+      "Points" -> statYear.points,
       "PIM" -> statYear.pim,
       "PlusMinus" -> statYear.plusMinus,
       "Team" -> Some(statYear.team),
