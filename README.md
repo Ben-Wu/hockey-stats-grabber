@@ -24,3 +24,15 @@ Install [sbt](https://github.com/sbt/sbt) and [Terraform](https://github.com/has
 if any changes are detected
 
 `make deploy` will both create the JARs and upload them to Lambda
+
+### Running
+
+Jobs can be started through the Step Function console with input:
+```json
+{
+  "startYear": 2017,
+  "endYear": 2017
+}
+```
+
+Or by running `make start` ([Ammonite](https://github.com/lihaoyi/ammonite) must be installed)

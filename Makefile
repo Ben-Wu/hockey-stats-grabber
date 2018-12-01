@@ -14,4 +14,7 @@ deploy: build update
 clean:
 	sbt clean
 
-.PHONY: build buildplayers buildstats deploy
+start:
+	amm scripts/start_job.sc
+
+.PHONY: build buildplayers buildstats deploy start
